@@ -14,8 +14,7 @@ class HangmanCLI
 
   def play_turn
     print_game_state
-    guess = ask_for_guess
-    @game.apply_guess(guess)
+    get_new_guess
   end
 
   def print_game_state
@@ -24,11 +23,11 @@ class HangmanCLI
     puts "So far, you've made #{@game.incorrect_guess_count} incorrect guesses."
   end
 
-  def ask_for_guess
+  def get_new_guess
     loop do
       print "What's your next guess? "
       guess = gets.chomp.upcase
-      return guess if @game.valid_guess?(guess)
+      return if @game.apply_guess(guess)
 
       puts "You need to guess a single letter which you haven't tried before!"
     end

@@ -29,11 +29,13 @@ class HangmanGame
     (@guessed_letters - @word.chars).size
   end
 
-  def valid_guess?(guess)
-    guess =~ /^[A-Z]$/ && !@guessed_letters.include?(guess)
-  end
-
   def apply_guess(guess)
     @guessed_letters.push(guess) if valid_guess?(guess)
+  end
+
+  private
+
+  def valid_guess?(guess)
+    guess =~ /^[A-Z]$/ && !@guessed_letters.include?(guess)
   end
 end
