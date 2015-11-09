@@ -13,14 +13,9 @@ class HangmanCLI
   private
 
   def play_turn
-    print_game_state
+    print_masked_word
+    print_incorrect_guesses
     get_new_guess
-  end
-
-  def print_game_state
-    print "I'm thinking of a word like "
-    puts @game.word_with_blanks.map { |char| char || '_' }.join
-    puts "So far, you've made #{@game.incorrect_guess_count} incorrect guesses."
   end
 
   def get_new_guess
@@ -40,6 +35,21 @@ class HangmanCLI
     else
       puts 'Better luck next time ...'
       puts "The word was #{@game.word}."
+    end
+  end
+
+  def print_masked_word
+    print "I'm thinking of a word like "
+    puts @game.word.chars.map { |char| @game.guessed?(char) ? char : '_' }.join
+  end
+
+  def print_incorrect_guesses
+    incorrect_count = @game.incorrect_guesses.size
+
+    if incorrect_count > 0
+      letters = incorrect_count == 1 ? 'letter' : 'letters'
+      print "So far, you've guessed #{incorrect_count} #{letters} incorrectly: "
+      puts @game.incorrect_guesses.to_a.join(' ')
     end
   end
 end

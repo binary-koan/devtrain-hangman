@@ -1,3 +1,5 @@
+require 'set'
+
 class HangmanGame
   WORDS = File.read('words.txt').split("\n")
   LIVES = 8
@@ -6,31 +8,35 @@ class HangmanGame
 
   def initialize
     @word = WORDS.sample.upcase
-    @guessed_letters = []
+    @guessed_letters = Set.new
   end
 
   def in_progress?
-    !won? && !lost?
+    !finished?
+  end
+
+  def finished?
+    won? || lost?
   end
 
   def won?
-    (@word.chars - @guessed_letters).empty?
+    @guessed_letters.superset?(@word.chars.to_set)
   end
 
   def lost?
-    incorrect_guess_count >= LIVES
+    incorrect_guesses.size >= LIVES
   end
 
-  def word_with_blanks
-    @word.chars.map { |char| @guessed_letters.include?(char) ? char : '_' }
+  def guessed?(char)
+    @guessed_letters.include?(char)
   end
 
-  def incorrect_guess_count
-    (@guessed_letters - @word.chars).size
+  def incorrect_guesses
+    @guessed_letters - @word.chars
   end
 
   def apply_guess(guess)
-    @guessed_letters.push(guess) if valid_guess?(guess)
+    @guessed_letters.add(guess) if valid_guess?(guess)
   end
 
   private
