@@ -6,24 +6,27 @@ RSpec.describe Interface do
   let(:game) { Game.new('test') }
   let(:view) { Interface.new(game) }
 
+  before do
+    allow(view).to receive(:print)
+    allow(view).to receive(:puts)
+    allow(view).to receive(:gets).and_return("\n")
+  end
+
   describe '#print_game_state' do
     it 'initially prints the target word as underscores' do
-      allow(view).to receive(:print)
       expect(view).to receive(:puts).with('_' * game.word.length)
       view.print_game_state
     end
 
     it 'prints the target word with letters when letters have been guessed' do
-      guess_correctly(1)
-      allow(view).to receive(:print)
-      expect(view).to receive(:puts).with(/[A-Z]/)
+      game.apply_guess('T')
+      game.apply_guess('E')
+      expect(view).to receive(:puts).with('TE_T')
       view.print_game_state
     end
 
     it 'prints the number of incorrect guesses' do
       guess_incorrectly(2)
-      allow(view).to receive(:print)
-      allow(view).to receive(:puts)
       expect(view).to receive(:print).with(/2 letters incorrect/)
       expect(view).to receive(:puts).with(/[A-Z] [A-Z]/)
       view.print_game_state
@@ -33,18 +36,15 @@ RSpec.describe Interface do
   describe '#ask_for_guess' do
     it 'prints a message asking for a guess' do
       expect(view).to receive(:print).with("What's your next guess? ")
-      allow(view).to receive(:gets).and_return('')
       view.ask_for_guess
     end
 
     it 'gets a line of input' do
-      allow(view).to receive(:print)
       expect(view).to receive(:gets).and_return("A\n")
       expect(view.ask_for_guess).to eq 'A'
     end
 
     it 'makes input uppercase' do
-      allow(view).to receive(:print)
       expect(view).to receive(:gets).and_return("iNpUt\n")
       expect(view.ask_for_guess).to eq 'INPUT'
     end
