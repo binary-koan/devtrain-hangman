@@ -42,6 +42,6 @@ class Hangman
   private
 
   def valid_guess?(guess)
-    guess =~ /^[A-Z]$/ && !@guessed_letters.include?(guess)
+    guess =~ /\A[A-Z]\z/ && !@guessed_letters.include?(guess)
   end
 end
