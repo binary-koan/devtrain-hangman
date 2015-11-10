@@ -1,10 +1,7 @@
-require_relative 'hangman'
-require_relative 'interface'
-
 class Controller
-  def initialize
-    @game = Hangman.new
-    @view = Interface.new(@game)
+  def initialize(game, view)
+    @game = game
+    @view = view
   end
 
   def play
@@ -23,5 +20,3 @@ class Controller
     end
   end
 end
-
-Controller.new.play
