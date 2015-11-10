@@ -1,6 +1,6 @@
 require 'set'
 
-class Hangman
+class Game
   LIVES = 8
 
   attr_reader :word

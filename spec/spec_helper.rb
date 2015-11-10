@@ -4,7 +4,7 @@ SimpleCov.start do
 end
 
 require_relative '../lib/controller'
-require_relative '../lib/hangman'
+require_relative '../lib/game'
 require_relative '../lib/interface'
 
 module SpecHelper
@@ -13,7 +13,7 @@ module SpecHelper
   end
 
   def lose_game
-    guess_incorrectly(Hangman::LIVES)
+    guess_incorrectly(Game::LIVES)
   end
 
   def guess_correctly(times)

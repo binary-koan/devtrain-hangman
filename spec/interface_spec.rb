@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 RSpec.describe Interface do
   include SpecHelper
 
-  let(:game) { Hangman.new('test') }
+  let(:game) { Game.new('test') }
   let(:view) { Interface.new(game) }
 
   describe '#print_game_state' do

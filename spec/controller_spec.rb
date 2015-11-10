@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 RSpec.describe Controller do
   let(:game) {
-    instance_double(Hangman,
+    instance_double(Game,
       apply_guess: true)
   }
   let(:view) {
