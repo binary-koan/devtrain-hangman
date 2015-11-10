@@ -9,6 +9,8 @@ class Controller
     @view.print_game_result
   end
 
+  private
+
   def play_turn
     @view.print_game_state
     get_new_guess
