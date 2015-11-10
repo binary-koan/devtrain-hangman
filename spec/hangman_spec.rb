@@ -13,13 +13,35 @@ RSpec.describe Hangman do
     it 'should be false when the game is won' do
       win_game
       expect(game).to be_won
-      expect(game).to_not be_in_progress
+      expect(game).not_to be_in_progress
     end
 
     it 'should be false when the game is lost' do
       lose_game
       expect(game).to be_lost
-      expect(game).to_not be_in_progress
+      expect(game).not_to be_in_progress
+    end
+  end
+
+  describe '#guessed?' do
+    it 'should be false for invalid guesses' do
+      game.apply_guess('abc')
+      expect(game).not_to be_guessed('abc')
+    end
+
+    it 'should be false for letters which have not been guessed' do
+      game.apply_guess('b')
+      expect(game).not_to be_guessed('a')
+    end
+
+    it 'should be true for letters which have been guessed correctly' do
+      guesses = guess_correctly(1)
+      expect(game).to be_guessed(guesses[0])
+    end
+
+    it 'should be true for letters which have been guessed incorrectly' do
+      guesses = guess_incorrectly(1)
+      expect(game).to be_guessed(guesses[0])
     end
   end
 
