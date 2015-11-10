@@ -26,9 +26,9 @@ RSpec.describe Interface do
     end
 
     it 'prints the number of incorrect guesses' do
-      guess_incorrectly(2)
+      guesses = guess_incorrectly(2)
       expect(view).to receive(:print).with(/2 letters incorrect/)
-      expect(view).to receive(:puts).with(/[A-Z] [A-Z]/)
+      expect(view).to receive(:puts).with("#{guesses[0]} #{guesses[1]}")
       view.print_game_state
     end
   end

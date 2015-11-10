@@ -9,7 +9,7 @@ RSpec.describe Controller do
     instance_double(Interface,
       print_game_state: nil,
       print_game_result: nil,
-      ask_for_guess: nil)
+      ask_for_guess: '')
   }
   let(:controller) { Controller.new(game, view) }
 

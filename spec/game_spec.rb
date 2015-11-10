@@ -25,13 +25,13 @@ RSpec.describe Game do
 
   describe '#guessed?' do
     it 'should be false for invalid guesses' do
-      game.apply_guess('abc')
-      expect(game).not_to be_guessed('abc')
+      game.apply_guess('ABC')
+      expect(game).not_to be_guessed('ABC')
     end
 
     it 'should be false for letters which have not been guessed' do
-      game.apply_guess('b')
-      expect(game).not_to be_guessed('a')
+      game.apply_guess('B')
+      expect(game).not_to be_guessed('A')
     end
 
     it 'should be true for letters which have been guessed correctly' do
@@ -67,19 +67,29 @@ RSpec.describe Game do
   end
 
   describe '#apply_guess' do
-    it 'should add a valid guess to the set of guessed letters' do
-      game.apply_guess('A')
-      expect(game.guessed?('A')).to be_truthy
+    it 'should succeed for letters in the word' do
+      expect(game.apply_guess('T')).to be_truthy
+    end
+
+    it 'should succeed for letters not in the word' do
+      expect(game.apply_guess('A')).to be_truthy
+    end
+
+    it 'should fail when guessing the same letter twice' do
+      expect(game.apply_guess('A')).to be_truthy
+      expect(game.apply_guess('A')).to be_falsy
+    end
+
+    it 'should fail for lowercase letters' do
+      expect(game.apply_guess('a')).to be_falsy
     end
 
     it 'should fail for strings longer than 1' do
-      game.apply_guess('AB')
-      expect(game.guessed?('AB')).to be_falsy
+      expect(game.apply_guess('AB')).to be_falsy
     end
 
     it 'should fail for non-alphabetical characters' do
-      game.apply_guess('!')
-      expect(game.guessed?('!')).to be_falsy
+      expect(game.apply_guess('!')).to be_falsy
     end
   end
 end
