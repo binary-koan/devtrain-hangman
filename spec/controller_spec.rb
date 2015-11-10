@@ -1,6 +1,4 @@
-require_relative '../lib/controller'
-require_relative '../lib/hangman'
-require_relative '../lib/interface'
+require_relative 'spec_helper'
 
 RSpec.describe Controller do
   let(:game) {

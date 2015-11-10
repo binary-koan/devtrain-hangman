@@ -1,5 +1,3 @@
-require_relative '../lib/hangman'
-require_relative '../lib/interface'
 require_relative 'spec_helper'
 
 RSpec.describe Interface do
@@ -16,8 +14,9 @@ RSpec.describe Interface do
     end
 
     it 'prints the target word with letters when letters have been guessed' do
+      guess_correctly(1)
       allow(view).to receive(:print)
-      expect(view).to receive(:puts).with(/[A-Z_]+/)
+      expect(view).to receive(:puts).with(/[A-Z]/)
       view.print_game_state
     end
 

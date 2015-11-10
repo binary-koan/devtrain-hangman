@@ -1,3 +1,12 @@
+require 'simplecov'
+SimpleCov.start do
+  add_filter '/spec/'
+end
+
+require_relative '../lib/controller'
+require_relative '../lib/hangman'
+require_relative '../lib/interface'
+
 module SpecHelper
   def win_game
     guess_correctly(game.word.length)
