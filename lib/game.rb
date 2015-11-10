@@ -1,7 +1,7 @@
 require 'set'
 
 class Game
-  LIVES = 8
+  MAX_LIVES = 8
 
   attr_reader :word
 
@@ -23,7 +23,7 @@ class Game
   end
 
   def lost?
-    incorrect_guesses.size >= LIVES
+    incorrect_guesses.size >= MAX_LIVES
   end
 
   def guessed?(char)

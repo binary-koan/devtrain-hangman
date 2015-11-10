@@ -13,7 +13,7 @@ module SpecHelper
   end
 
   def lose_game
-    guess_incorrectly(Game::LIVES)
+    guess_incorrectly(Game::MAX_LIVES)
   end
 
   def guess_correctly(times)
