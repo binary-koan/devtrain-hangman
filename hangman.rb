@@ -1,6 +1,6 @@
 require 'set'
 
-class HangmanGame
+class Hangman
   WORDS = File.read('words.txt').split("\n")
   LIVES = 8
 

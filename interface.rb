@@ -1,8 +1,8 @@
-require_relative 'game'
+require_relative 'hangman'
 
-class HangmanCLI
+class Interface
   def initialize
-    @game = HangmanGame.new
+    @game = Hangman.new
   end
 
   def play
@@ -54,4 +54,4 @@ class HangmanCLI
   end
 end
 
-HangmanCLI.new.play
+Interface.new.play
