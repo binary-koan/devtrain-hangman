@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 RSpec.describe Hangman do
   include SpecHelper
 
-  let(:game) { Hangman.new }
+  let(:game) { Hangman.new('test') }
 
   describe '#in_progress?' do
     it 'should be true for a newly created game' do

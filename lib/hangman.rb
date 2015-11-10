@@ -1,13 +1,12 @@
 require 'set'
 
 class Hangman
-  WORDS = File.read('words.txt').split("\n")
   LIVES = 8
 
   attr_reader :word
 
-  def initialize
-    @word = WORDS.sample.upcase
+  def initialize(word)
+    @word = word.upcase
     @guessed_letters = Set.new
   end
 
