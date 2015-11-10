@@ -20,7 +20,7 @@ class Hangman
   end
 
   def won?
-    @guessed_letters.superset?(@word.chars.to_set)
+    @guessed_letters.superset?(word.chars.to_set)
   end
 
   def lost?
@@ -32,7 +32,7 @@ class Hangman
   end
 
   def incorrect_guesses
-    @guessed_letters - @word.chars
+    @guessed_letters - word.chars
   end
 
   def apply_guess(guess)
