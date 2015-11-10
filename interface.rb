@@ -1,31 +1,16 @@
-require_relative 'hangman'
-
 class Interface
-  def initialize
-    @game = Hangman.new
+  def initialize(game)
+    @game = game
   end
 
-  def play
-    play_turn while @game.in_progress?
-    print_game_result
-  end
-
-  private
-
-  def play_turn
+  def print_game_state
     print_masked_word
     print_incorrect_guesses
-    get_new_guess
   end
 
-  def get_new_guess
-    loop do
-      print "What's your next guess? "
-      guess = gets.chomp.upcase
-      return if @game.apply_guess(guess)
-
-      puts "You need to guess a single letter which you haven't tried before!"
-    end
+  def ask_for_guess
+    print "What's your next guess? "
+    gets.chomp.upcase
   end
 
   def print_game_result
@@ -37,6 +22,12 @@ class Interface
       puts "The word was #{@game.word}."
     end
   end
+
+  def print_error(err)
+    puts err
+  end
+
+  private
 
   def print_masked_word
     print "I'm thinking of a word like "
@@ -53,5 +44,3 @@ class Interface
     end
   end
 end
-
-Interface.new.play
