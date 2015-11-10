@@ -1,19 +1,10 @@
 require_relative '../lib/hangman'
+require_relative 'spec_helper'
 
 RSpec.describe Hangman do
+  include SpecHelper
+
   let(:game) { Hangman.new }
-
-  def guess_correctly(times)
-    game.word.chars.first(times).each do |char|
-      game.apply_guess(char)
-    end
-  end
-
-  def guess_incorrectly(times)
-    (('A'..'Z').to_a - game.word.chars).first(times).each do |char|
-      game.apply_guess(char)
-    end
-  end
 
   describe '#in_progress?' do
     it 'should be true for a newly created game' do
@@ -21,12 +12,14 @@ RSpec.describe Hangman do
     end
 
     it 'should be false when the game is won' do
-      guess_correctly(game.word.length)
+      win_game
+      expect(game).to be_won
       expect(game).to_not be_in_progress
     end
 
     it 'should be false when the game is lost' do
-      guess_incorrectly(Hangman::LIVES)
+      lose_game
+      expect(game).to be_lost
       expect(game).to_not be_in_progress
     end
   end
