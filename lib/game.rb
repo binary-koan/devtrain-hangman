@@ -35,12 +35,6 @@ class Game
   end
 
   def apply_guess(guess)
-    @guessed_letters.add(guess) if valid_guess?(guess)
-  end
-
-  private
-
-  def valid_guess?(guess)
-    guess =~ /\A[A-Z]\z/ && !@guessed_letters.include?(guess)
+    @guessed_letters.add?(guess) if guess =~ /\A[A-Z]\z/
   end
 end
