@@ -9,7 +9,7 @@ RSpec.describe Interface do
       incorrect_guesses: incorrect_guesses)
   end
 
-  let(:view) { Interface.new(game) }
+  subject(:view) { Interface.new(game) }
 
   before do
     allow(view).to receive(:print)

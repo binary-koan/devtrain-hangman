@@ -11,7 +11,8 @@ RSpec.describe Controller do
       print_game_result: nil,
       ask_for_guess: "")
   end
-  let(:controller) { Controller.new(game, view) }
+
+  subject(:controller) { Controller.new(game, view) }
 
   describe "#play" do
     it "prints the result when the game is finished" do

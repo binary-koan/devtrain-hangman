@@ -2,7 +2,8 @@ require_relative 'spec_helper'
 
 RSpec.describe Game do
   let(:word) { "test" }
-  let(:game) { Game.new(word) }
+
+  subject(:game) { Game.new(word) }
 
   def win_game
     guess_correctly(word.length)
