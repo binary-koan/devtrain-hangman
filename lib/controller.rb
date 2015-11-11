@@ -13,6 +13,6 @@ class Controller
 
   def play_turn
     @view.print_game_state
-    @view.process_next_guess
+    @game.apply_guess(@view.ask_for_guess)
   end
 end

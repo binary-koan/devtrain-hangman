@@ -10,8 +10,12 @@ class Interface
     puts incorrect_guess_display if @game.incorrect_guesses.size > 0
   end
 
-  def process_next_guess
-    until @game.apply_guess(ask_for_guess)
+  def ask_for_guess
+    loop do
+      print "What's your next guess? "
+      guess = gets.chomp.upcase
+      return guess if @game.valid_guess?(guess)
+
       puts "You need to guess a single letter which you haven't tried before!"
     end
   end
@@ -28,11 +32,6 @@ class Interface
   end
 
   private
-
-  def ask_for_guess
-    print "What's your next guess? "
-    gets.chomp.upcase
-  end
 
   def masked_word_display
     word = @game.word.chars.map { |char| @game.guessed?(char) ? char : '_' }.join
