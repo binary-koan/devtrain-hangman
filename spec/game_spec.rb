@@ -111,6 +111,10 @@ RSpec.describe Game do
       expect(game.apply_guess("A")).to be_falsy
     end
 
+    it "fails with an empty string" do
+      expect(game.apply_guess("")).to be_falsy
+    end
+
     it "fails for lowercase letters" do
       expect(game.apply_guess("a")).to be_falsy
     end

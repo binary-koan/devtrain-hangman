@@ -20,12 +20,6 @@ RSpec.describe Controller do
       controller.play
     end
 
-    it "prints the game state if the game is not finished" do
-      expect(game).to receive(:in_progress?).and_return(true, false)
-      expect(view).to receive(:print_game_state)
-      controller.play
-    end
-
     it "prints the game state each turn until the game is finished" do
       expect(game).to receive(:in_progress?).and_return(true, true, true, false)
       expect(view).to receive(:print_game_state).exactly(3).times
