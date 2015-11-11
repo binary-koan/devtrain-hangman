@@ -13,14 +13,6 @@ class Controller
 
   def play_turn
     @view.print_game_state
-    get_new_guess
-  end
-
-  def get_new_guess
-    until @game.apply_guess(@view.ask_for_guess)
-      @view.print_error(
-        "You need to guess a single letter which you haven't tried before!"
-      )
-    end
+    @view.process_next_guess
   end
 end
