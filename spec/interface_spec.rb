@@ -1,8 +1,6 @@
 require_relative 'spec_helper'
 
 RSpec.describe Interface do
-  include SpecHelper
-
   let(:incorrect_guesses) { Set.new }
   let(:game) do
     instance_double(Game,

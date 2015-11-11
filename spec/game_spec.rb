@@ -1,9 +1,28 @@
 require_relative 'spec_helper'
 
 RSpec.describe Game do
-  include SpecHelper
+  let(:word) { "test" }
+  let(:game) { Game.new(word) }
 
-  let(:game) { Game.new('test') }
+  def win_game
+    guess_correctly(word.length)
+  end
+
+  def lose_game
+    guess_incorrectly(Game::MAX_LIVES)
+  end
+
+  def guess_correctly(times)
+    word.upcase.chars.first(times).each do |char|
+      game.apply_guess(char)
+    end
+  end
+
+  def guess_incorrectly(times)
+    (('A'..'Z').to_a - word.upcase.chars).first(times).each do |char|
+      game.apply_guess(char)
+    end
+  end
 
   describe "#in_progress?" do
     subject { game.in_progress? }
@@ -24,24 +43,26 @@ RSpec.describe Game do
   end
 
   describe "#guessed?" do
-    it "is false for invalid guesses" do
-      game.apply_guess("ABC")
-      expect(game).not_to be_guessed("ABC")
+    let(:word) { "guessword" }
+
+    it "is true for letters which have been guessed correctly" do
+      game.apply_guess("G")
+      expect(game).to be_guessed("G")
+    end
+
+    it "is true for letters which have been guessed incorrectly" do
+      game.apply_guess("A")
+      expect(game).to be_guessed("A")
     end
 
     it "is false for letters which have not been guessed" do
-      game.apply_guess("B")
-      expect(game).not_to be_guessed("A")
+      game.apply_guess("A")
+      expect(game).not_to be_guessed("X")
     end
 
-    it 'is true for letters which have been guessed correctly' do
-      guesses = guess_correctly(1)
-      expect(game).to be_guessed(guesses[0])
-    end
-
-    it 'is true for letters which have been guessed incorrectly' do
-      guesses = guess_incorrectly(1)
-      expect(game).to be_guessed(guesses[0])
+    it "is false for invalid guesses" do
+      game.apply_guess("ABC")
+      expect(game).not_to be_guessed("ABC")
     end
   end
 
@@ -75,12 +96,14 @@ RSpec.describe Game do
   end
 
   describe "#apply_guess" do
+    let(:word) { "applying" }
+
     it "succeeds when guessing a letter from the word" do
-      expect(game.apply_guess("T")).to be_truthy
+      expect(game.apply_guess("A")).to be_truthy
     end
 
     it "succeeds when guessing a letter which isn't in the word" do
-      expect(game.apply_guess("A")).to be_truthy
+      expect(game.apply_guess("Z")).to be_truthy
     end
 
     it "fails when guessing the same letter twice" do

@@ -37,8 +37,8 @@ class Interface
 
   def incorrect_guess_display
     count = @game.incorrect_guesses.size
-    letters = count == 1 ? "letter" : "letters"
     guesses = @game.incorrect_guesses.to_a.join(' ')
+    letters = count == 1 ? "letter" : "letters"
 
     "So far, you've guessed #{count} #{letters} incorrectly: #{guesses}"
   end
