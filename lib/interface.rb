@@ -1,4 +1,6 @@
 class Interface
+  HANGMAN_ART = File.read('art.txt').split("\n\n")
+
   def initialize(game)
     @game = game
   end
@@ -19,8 +21,9 @@ class Interface
       puts "Well done!"
       puts "The word was indeed #{@game.word}."
     else
-      puts "Better luck next time ..."
-      puts "The word was #{@game.word}."
+      puts hangman_with_text(Game::MAX_LIVES - 1,
+        "Better luck next time ...",
+        "The word was #{@game.word}.")
     end
   end
 
@@ -39,9 +42,22 @@ class Interface
 
   def incorrect_guess_display
     count = @game.incorrect_guesses.size
-    guesses = @game.incorrect_guesses.to_a.join(' ')
+    guesses = @game.incorrect_guesses.to_a
     letters = count == 1 ? "letter" : "letters"
 
-    "So far, you've guessed #{count} #{letters} incorrectly: #{guesses}"
+    hangman_with_text(count - 1,
+      "So far, you've guessed #{count} #{letters} incorrectly:",
+      "#{guesses.join(" ")}")
+  end
+
+  def hangman_with_text(index, text1, text2)
+    art = HANGMAN_ART[index].split("\n")
+    art[3] = "#{pad_to_length(art[3], art[0].length)}  #{text1}"
+    art[4] = "#{pad_to_length(art[4], art[0].length)}  #{text2}"
+    art.join("\n")
+  end
+
+  def pad_to_length(line, length)
+    line + " " * (length - line.length)
   end
 end

@@ -100,7 +100,7 @@ RSpec.describe Interface do
       end
 
       it "displays a failure message" do
-        expect(view).to receive(:puts).with "Better luck next time ..."
+        expect(view).to receive(:puts).with(/Better luck next time .../)
         allow(view).to receive(:puts)
         view.print_game_result
       end
