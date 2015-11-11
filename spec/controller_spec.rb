@@ -1,16 +1,16 @@
 require_relative 'spec_helper'
 
 RSpec.describe Controller do
-  let(:game) {
+  let(:game) do
     instance_double(Game,
       apply_guess: true)
-  }
-  let(:view) {
+  end
+  let(:view) do
     instance_double(Interface,
       print_game_state: nil,
       print_game_result: nil,
       ask_for_guess: '')
-  }
+  end
   let(:controller) { Controller.new(game, view) }
 
   describe "#play" do

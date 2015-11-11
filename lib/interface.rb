@@ -4,8 +4,8 @@ class Interface
   end
 
   def print_game_state
-    print_masked_word
-    print_incorrect_guesses
+    puts masked_word_display
+    puts incorrect_guess_display if @game.incorrect_guesses.size > 0
   end
 
   def ask_for_guess
@@ -29,18 +29,17 @@ class Interface
 
   private
 
-  def print_masked_word
-    print "I'm thinking of a word like "
-    puts @game.word.chars.map { |char| @game.guessed?(char) ? char : '_' }.join
+  def masked_word_display
+    word = @game.word.chars.map { |char| @game.guessed?(char) ? char : '_' }.join
+
+    "I'm thinking of a word like #{word}"
   end
 
-  def print_incorrect_guesses
-    incorrect_count = @game.incorrect_guesses.size
+  def incorrect_guess_display
+    count = @game.incorrect_guesses.size
+    letters = count == 1 ? "letter" : "letters"
+    guesses = @game.incorrect_guesses.to_a.join(' ')
 
-    if incorrect_count > 0
-      letters = incorrect_count == 1 ? "letter" : "letters"
-      print "So far, you've guessed #{incorrect_count} #{letters} incorrectly: "
-      puts @game.incorrect_guesses.to_a.join(' ')
-    end
+    "So far, you've guessed #{count} #{letters} incorrectly: #{guesses}"
   end
 end

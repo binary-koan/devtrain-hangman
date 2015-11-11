@@ -14,7 +14,6 @@ RSpec.describe Interface do
   let(:view) { Interface.new(game) }
 
   before do
-    allow(view).to receive(:print)
     allow(view).to receive(:puts)
     allow(view).to receive(:gets).and_return("\n")
   end
@@ -22,7 +21,7 @@ RSpec.describe Interface do
   describe "#print_game_state" do
     context "when no letters have been guessed" do
       it "prints the target word as underscores" do
-        expect(view).to receive(:puts).with("____")
+        expect(view).to receive(:puts).with(/____/)
         view.print_game_state
       end
     end
@@ -30,7 +29,7 @@ RSpec.describe Interface do
     context "when correct letters have been guessed" do
       it "prints the target word with letters and underscores" do
         expect(game).to receive(:guessed?).and_return(true, true, false)
-        expect(view).to receive(:puts).with("TE__")
+        expect(view).to receive(:puts).with(/TE__/)
         view.print_game_state
       end
     end
@@ -39,8 +38,12 @@ RSpec.describe Interface do
       let(:incorrect_guesses) { Set.new(["A", "B"]) }
 
       it "prints the number of incorrect guesses" do
-        expect(view).to receive(:print).with(/2 letters incorrect/)
-        expect(view).to receive(:puts).with("A B")
+        expect(view).to receive(:puts).with(/2 letters incorrect/)
+        view.print_game_state
+      end
+
+      it "prints a list of incorrect guesses" do
+        expect(view).to receive(:puts).with(/A B/)
         view.print_game_state
       end
     end
