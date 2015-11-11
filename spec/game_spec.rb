@@ -59,12 +59,18 @@ RSpec.describe Game do
 
     context "when incorrect letters have been guessed" do
       before { guess_incorrectly(2) }
-      it { is_expected.to have(2).items }
+
+      it "should contain the guessed letters" do
+        expect(subject.length).to eq 2
+      end
     end
 
     context "when correct letters have been guessed" do
       before { guess_correctly(2) }
-      it { is_expected.to have(2).items }
+
+      it "should not contain the guessed letters" do
+        expect(subject.length).to eq 0
+      end
     end
   end
 

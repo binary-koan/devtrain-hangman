@@ -14,6 +14,7 @@ RSpec.describe Interface do
   let(:view) { Interface.new(game) }
 
   before do
+    allow(view).to receive(:print)
     allow(view).to receive(:puts)
     allow(view).to receive(:gets).and_return("\n")
   end
