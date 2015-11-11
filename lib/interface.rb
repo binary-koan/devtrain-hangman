@@ -15,10 +15,10 @@ class Interface
 
   def print_game_result
     if @game.won?
-      puts 'Well done!'
+      puts "Well done!"
       puts "The word was indeed #{@game.word}."
     else
-      puts 'Better luck next time ...'
+      puts "Better luck next time ..."
       puts "The word was #{@game.word}."
     end
   end
@@ -38,7 +38,7 @@ class Interface
     incorrect_count = @game.incorrect_guesses.size
 
     if incorrect_count > 0
-      letters = incorrect_count == 1 ? 'letter' : 'letters'
+      letters = incorrect_count == 1 ? "letter" : "letters"
       print "So far, you've guessed #{incorrect_count} #{letters} incorrectly: "
       puts @game.incorrect_guesses.to_a.join(' ')
     end

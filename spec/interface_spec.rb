@@ -12,20 +12,20 @@ RSpec.describe Interface do
     allow(view).to receive(:gets).and_return("\n")
   end
 
-  describe '#print_game_state' do
-    it 'initially prints the target word as underscores' do
+  describe "#print_game_state" do
+    it "initially prints the target word as underscores" do
       expect(view).to receive(:puts).with('_' * game.word.length)
       view.print_game_state
     end
 
-    it 'prints the target word with letters when letters have been guessed' do
+    it "prints the target word with letters when letters have been guessed" do
       game.apply_guess('T')
       game.apply_guess('E')
       expect(view).to receive(:puts).with('TE_T')
       view.print_game_state
     end
 
-    it 'prints the number of incorrect guesses' do
+    it "prints the number of incorrect guesses" do
       guesses = guess_incorrectly(2)
       expect(view).to receive(:print).with(/2 letters incorrect/)
       expect(view).to receive(:puts).with("#{guesses[0]} #{guesses[1]}")
@@ -33,49 +33,49 @@ RSpec.describe Interface do
     end
   end
 
-  describe '#ask_for_guess' do
-    it 'prints a message asking for a guess' do
+  describe "#ask_for_guess" do
+    it "prints a message asking for a guess" do
       expect(view).to receive(:print).with("What's your next guess? ")
       view.ask_for_guess
     end
 
-    it 'gets a line of input' do
+    it "gets a line of input" do
       expect(view).to receive(:gets).and_return("A\n")
-      expect(view.ask_for_guess).to eq 'A'
+      expect(view.ask_for_guess).to eq "A"
     end
 
-    it 'makes input uppercase' do
+    it "makes input uppercase" do
       expect(view).to receive(:gets).and_return("iNpUt\n")
-      expect(view.ask_for_guess).to eq 'INPUT'
+      expect(view.ask_for_guess).to eq "INPUT"
     end
   end
 
-  describe '#print_game_result' do
+  describe "#print_game_result" do
     def game_word_pattern
       Regexp.new(Regexp.escape(game.word))
     end
 
-    it 'displays a success message if the game was won' do
+    it "displays a success message if the game was won" do
       win_game
       expect(view).to receive(:puts).with('Well done!')
       allow(view).to receive(:puts)
       view.print_game_result
     end
 
-    it 'displays the word if the game was won' do
+    it "displays the word if the game was won" do
       win_game
       allow(view).to receive(:puts)
       expect(view).to receive(:puts).with(game_word_pattern)
       view.print_game_result
     end
 
-    it 'displays a failure message if the game was not won' do
-      expect(view).to receive(:puts).with 'Better luck next time ...'
+    it "displays a failure message if the game was not won" do
+      expect(view).to receive(:puts).with "Better luck next time ..."
       allow(view).to receive(:puts)
       view.print_game_result
     end
 
-    it 'displays the word if the game was not won' do
+    it "displays the word if the game was not won" do
       win_game
       allow(view).to receive(:puts)
       expect(view).to receive(:puts).with(game_word_pattern)
@@ -83,8 +83,8 @@ RSpec.describe Interface do
     end
   end
 
-  describe '#print_error' do
-    it 'displays the given error message' do
+  describe "#print_error" do
+    it "displays the given error message" do
       error = 'test'
       expect(view).to receive(:puts).with(error)
       view.print_error(error)
