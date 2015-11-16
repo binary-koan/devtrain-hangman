@@ -1,2 +1,5 @@
-<h1>Games#new</h1>
-<p>Find me in app/views/games/new.html.erb</p>
+<h1>Hangman</h1>
+
+<%= form_for Game.new do |f| %>
+  <%= f.submit "New game", class: "btn" %>
+<% end %>
