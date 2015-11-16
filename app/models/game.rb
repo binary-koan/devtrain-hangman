@@ -1,7 +1,9 @@
 class Game < ActiveRecord::Base
   DICTIONARY = File.read(Rails.root.join("config/words.txt")).split
 
-  validates_presence_of :target_word
+  has_many :guesses
+
+  validates :target_word, presence: true
   before_validation :generate_target
 
   private
