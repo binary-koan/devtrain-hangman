@@ -18,8 +18,13 @@ RSpec.describe GamesController, type: :controller do
 
   describe "GET #show" do
     it "fails for a game which does not exist" do
-      get :show, id: 1
-      expect(response).to have_http_status(404)
+      expect { get :show, id: 1 }.to raise_error ActiveRecord::RecordNotFound
+    end
+
+    it "succeeds for a game which exists" do
+      game = Game.create!
+      get :show, id: game.id
+      expect(response).to have_http_status(:success)
     end
   end
 
