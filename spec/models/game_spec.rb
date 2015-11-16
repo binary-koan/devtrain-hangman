@@ -41,18 +41,39 @@ RSpec.describe Game, type: :model do
       guess = game.guesses.create!(guessed_letter: "a")
       expect(guess.game).to eq game
     end
+
+    it "does not add guesses with the same letter" do
+      game.guesses.create!(guessed_letter: "a")
+      guess = game.guesses.new(guessed_letter: "a")
+      expect(guess.save).to eq false
+    end
   end
 
   describe "#won?" do
     let(:target_word) { "croc" }
+    subject { game.won? }
 
-    it "is false at the start of the game" do
-      expect(game).not_to be_won
+    context "at the start of the game" do
+      it { is_expected.to eq false }
     end
 
-    it "is true when all letters in the word have been guessed" do
-      guess("c", "o", "r")
-      expect(game).to be_won
+    context "when all letters in the word have been guessed" do
+      before { guess("c", "o", "r") }
+      it { is_expected.to eq true }
+    end
+  end
+
+  describe "#lost?" do
+    let(:target_word) { "z" }
+    subject { game.lost? }
+
+    context "at the start of the game" do
+      it { is_expected.to eq false }
+    end
+
+    context "when there are too many incorrect guesses" do
+      before { guess(*("a".."j")) }
+      it { is_expected.to eq true }
     end
   end
 end
