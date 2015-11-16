@@ -8,6 +8,15 @@ RSpec.describe Game, type: :model do
     letters.each { |letter| game.guesses.create!(guessed_letter: letter) }
   end
 
+  def win_game
+    guess(*target_word.chars.uniq)
+  end
+
+  def lose_game
+    incorrect_chars = ("a".."z").to_a - target_word.chars
+    guess(*(incorrect_chars.first(Game::MAX_LIVES)))
+  end
+
   describe "#target_word" do
     context "when unspecified" do
       let(:target_word) { nil }
@@ -42,9 +51,21 @@ RSpec.describe Game, type: :model do
       expect(guess.game).to eq game
     end
 
-    it "does not add guesses with the same letter" do
+    it "prevents adding guesses with the same letter" do
       game.guesses.create!(guessed_letter: "a")
       guess = game.guesses.new(guessed_letter: "a")
+      expect(guess.save).to eq false
+    end
+
+    it "prevents adding guesses when the game is won" do
+      win_game
+      guess = game.guesses.new(guessed_letter: "z")
+      expect(guess.save).to eq false
+    end
+
+    it "prevents adding guesses when the game is lost" do
+      lose_game
+      guess = game.guesses.new(guessed_letter: "z")
       expect(guess.save).to eq false
     end
   end
@@ -58,7 +79,7 @@ RSpec.describe Game, type: :model do
     end
 
     context "when all letters in the word have been guessed" do
-      before { guess("c", "o", "r") }
+      before { win_game }
       it { is_expected.to eq true }
     end
   end
@@ -72,7 +93,7 @@ RSpec.describe Game, type: :model do
     end
 
     context "when there are too many incorrect guesses" do
-      before { guess(*("a".."j")) }
+      before { lose_game }
       it { is_expected.to eq true }
     end
   end
