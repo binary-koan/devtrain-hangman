@@ -4,13 +4,23 @@
 
 .masked-word .letter {
   display: inline-block;
-  width: 32px;
-  height: 32px;
+  float: left;
+  width: 48px;
+  height: 48px;
   padding: 5px;
-  margin: 2px;
+  margin: 1px;
 
-  border: 1px solid #ddd;
+  background: #ddd;
   border-radius: 3px;
+
+  line-height: 38px;
+  text-align: center;
+}
+
+.masked-word:after {
+  display: table;
+  content: "";
+  clear: both;
 }
 
 .guess-form select.form-control {

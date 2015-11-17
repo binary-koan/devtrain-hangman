@@ -1,12 +1,17 @@
 <h1>Game <%= @game.id %></h1>
+
 <p class="masked-word">
   <% @game.target_word.chars.each do |char| %>
     <span class="letter"><%= @game.guessed?(char) ? char : "" %></span>
   <% end %>
 </p>
 
+<% if flash.alert %>
+  <div class="alert alert-danger"><%= flash.alert %></div>
+<% end %>
+
 <%= form_for [@game, @game.guesses.new], html: { class: "guess-form" } do |f| %>
   <%= f.label :guessed_letter, "Guess", class: "sr-only" %>
-  <%= f.select :guessed_letter, ("A".."Z").to_a, {}, class: "form-control" %>
+  <%= f.select :guessed_letter, ("a".."z").to_a, {}, class: "form-control" %>
   <%= f.submit "Guess!", class: "btn" %>
 <% end %>
