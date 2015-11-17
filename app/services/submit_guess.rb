@@ -1,13 +1,10 @@
 class SubmitGuess
-  def self.call(game, params)
-    new(game, params).tap { |submission| submission.call }
-  end
-
   attr_reader :errors
 
   def initialize(game, params)
     @game = game
     @guessed_letter = params[:guessed_letter]
+    @errors = []
   end
 
   def call
@@ -18,6 +15,8 @@ class SubmitGuess
     else
       apply_guess
     end
+
+    @errors.none?
   end
 
   private

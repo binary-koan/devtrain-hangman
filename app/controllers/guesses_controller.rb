@@ -1,9 +1,11 @@
 class GuessesController < ApplicationController
   def create
     game = Game.find(params[:game_id])
-    submission = SubmitGuess.call(game, guess_params)
+    submission = SubmitGuess.new(game, guess_params)
 
-    flash.alert = submission.errors if submission.errors
+    unless submission.call
+      flash.alert = submission.errors
+    end
     redirect_to game
   end
 

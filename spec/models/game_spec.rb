@@ -50,24 +50,6 @@ RSpec.describe Game, type: :model do
       guess = game.guesses.create!(guessed_letter: "a")
       expect(guess.game).to eq game
     end
-
-    # it "prevents adding guesses with the same letter" do
-    #   game.guesses.create!(guessed_letter: "a")
-    #   guess = game.guesses.new(guessed_letter: "a")
-    #   expect(guess.save).to eq false
-    # end
-    #
-    # it "prevents adding guesses when the game is won" do
-    #   win_game
-    #   guess = game.guesses.new(guessed_letter: "z")
-    #   expect(guess.save).to eq false
-    # end
-    #
-    # it "prevents adding guesses when the game is lost" do
-    #   lose_game
-    #   guess = game.guesses.new(guessed_letter: "z")
-    #   expect(guess.save).to eq false
-    # end
   end
 
   describe "#won?" do
@@ -95,6 +77,26 @@ RSpec.describe Game, type: :model do
     context "when there are too many incorrect guesses" do
       before { lose_game }
       it { is_expected.to eq true }
+    end
+  end
+
+  describe "#guessed?" do
+    let(:target_word) { "longword" }
+    before { guess("l", "q", "w", "z") }
+
+    it "is true for correctly guessed letters" do
+      expect(game).to be_guessed("l")
+      expect(game).to be_guessed("w")
+    end
+
+    it "is true for incorrectly guessed letters" do
+      expect(game).to be_guessed("q")
+      expect(game).to be_guessed("z")
+    end
+
+    it "is false for letters which have not been guessed" do
+      expect(game).not_to be_guessed("o")
+      expect(game).not_to be_guessed("y")
     end
   end
 end
