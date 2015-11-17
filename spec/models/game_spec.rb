@@ -99,4 +99,49 @@ RSpec.describe Game, type: :model do
       expect(game).not_to be_guessed("y")
     end
   end
+
+  describe "#incorrect_guesses" do
+    let(:target_word) { "incorrect" }
+    before { guess("i", "q", "c", "z") }
+
+    it "contains incorrectly guessed letters" do
+      expect(game.incorrect_guesses).to include "q"
+      expect(game.incorrect_guesses).to include "z"
+    end
+
+    it "does not contain correctly guessed letters" do
+      expect(game.incorrect_guesses).not_to include "i"
+      expect(game.incorrect_guesses).not_to include "c"
+    end
+
+    it "does not contain letters which haven't been guessed" do
+      expect(game.incorrect_guesses).not_to include "a"
+      expect(game.incorrect_guesses).not_to include "b"
+    end
+  end
+
+  describe "#masked_word" do
+    let(:target_word) { "test" }
+
+    subject { game.masked_word }
+
+    context "when no letters have been guessed" do
+      it { is_expected.to eq [nil, nil, nil, nil] }
+    end
+
+    context "when letters have been guessed incorrectly" do
+      before { guess("q", "z") }
+      it { is_expected.to eq [nil, nil, nil, nil] }
+    end
+
+    context "when some letters have been guessed" do
+      before { guess("t", "s") }
+      it { is_expected.to eq ["t", nil, "s", "t"] }
+    end
+
+    context "when all letters have been guessed" do
+      before { win_game }
+      it { is_expected.to eq ["t", "e", "s", "t"] }
+    end
+  end
 end
