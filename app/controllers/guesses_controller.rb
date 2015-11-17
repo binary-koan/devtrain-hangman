@@ -1,15 +1,20 @@
 class GuessesController < ApplicationController
+  before_action :assign_game
+
   def create
-    game = Game.find(params[:game_id])
-    submission = SubmitGuess.new(game, guess_params)
+    submission = SubmitGuess.new(@game, guess_params)
 
     unless submission.call
       flash.alert = submission.errors
     end
-    redirect_to game
+    redirect_to @game
   end
 
   private
+
+  def assign_game
+    @game = Game.find(params[:game_id])
+  end
 
   def guess_params
     params.require(:guess).permit(:guessed_letter)
