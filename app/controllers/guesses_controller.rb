@@ -3,7 +3,7 @@ class GuessesController < ApplicationController
     game = Game.find(params[:game_id])
     submission = SubmitGuess.call(game, guess_params)
 
-    flash.alert = service.errors if service.errors
+    flash.alert = submission.errors if submission.errors
     redirect_to game
   end
 
