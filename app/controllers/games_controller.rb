@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to @game
     else
-      redirect_to games_path
+      redirect_to new_game_url
     end
   end
 
