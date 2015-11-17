@@ -1,10 +1,6 @@
 <h1>Game <%= @game.id %></h1>
 
-<p class="masked-word">
-  <% @game.target_word.chars.each do |char| %>
-    <span class="letter"><%= @game.guessed?(char) ? char : "" %></span>
-  <% end %>
-</p>
+<%= render "target_word", chars: @game.masked_word %>
 
 <% if @game.incorrect_guesses.size > 0 %>
   <%= render "incorrect_guesses", guesses: @game.incorrect_guesses %>

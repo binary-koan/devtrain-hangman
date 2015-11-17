@@ -23,8 +23,12 @@ class Game < ActiveRecord::Base
     guessed_letters.include?(char)
   end
 
-  def guessed_letters
-    guesses.map(&:guessed_letter)
+  def masked_word
+    target_word.chars.map { |char| guessed?(char) ? char : nil }
+  end
+
+  def valid_guesses
+    ("a".."z").to_a - guessed_letters
   end
 
   def incorrect_guesses
@@ -35,5 +39,9 @@ class Game < ActiveRecord::Base
 
   def generate_target
     self.target_word ||= DICTIONARY.sample
+  end
+
+  def guessed_letters
+    guesses.map(&:guessed_letter)
   end
 end

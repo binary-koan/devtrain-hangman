@@ -1,5 +1,5 @@
 <%= form_for [game, guess], html: { class: "guess-form" } do |f| %>
   <%= f.label :guessed_letter, "Guess", class: "sr-only" %>
-  <%= f.select :guessed_letter, ("a".."z").to_a, {}, class: "form-control" %>
+  <%= f.select :guessed_letter, game.valid_guesses, {}, class: "form-control" %>
   <%= f.submit "Guess!" %>
 <% end %>
