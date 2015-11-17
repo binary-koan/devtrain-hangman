@@ -6,6 +6,10 @@
   <% end %>
 </p>
 
+<% if @game.incorrect_guesses.size > 0 %>
+  <%= render "incorrect_guesses", guesses: @game.incorrect_guesses %>
+<% end %>
+
 <% if flash.alert %>
   <div class="alert alert-danger"><%= flash.alert %></div>
 <% end %>

@@ -1,0 +1,6 @@
+<p class="incorrect-guesses">
+  You have made <%= guesses.size %> incorrect <%= "guess".pluralize(guesses.size) %>:
+  <% guesses.each do |guess| %>
+    <span class="guess"><%= guess %></span>
+  <% end %>
+</p>

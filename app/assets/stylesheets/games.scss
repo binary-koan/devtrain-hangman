@@ -1,26 +1,33 @@
-// Place all the styles related to the games controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.masked-word {
+  &:after {
+    display: table;
+    content: "";
+    clear: both;
+  }
 
-.masked-word .letter {
-  display: inline-block;
-  float: left;
-  width: 48px;
-  height: 48px;
-  padding: 5px;
-  margin: 1px;
+  .letter {
+    display: inline-block;
+    float: left;
+    width: 48px;
+    height: 48px;
+    padding: 5px;
+    margin: 1px;
 
-  background: #ddd;
-  border-radius: 3px;
+    background: #ddd;
+    border-radius: 3px;
 
-  line-height: 38px;
-  text-align: center;
+    line-height: 38px;
+    text-align: center;
+  }
 }
 
-.masked-word:after {
-  display: table;
-  content: "";
-  clear: both;
+.incorrect-guesses .guess {
+  display: inline-block;
+  padding: 0 5px;
+
+  background: red;
+  border-radius: 3px;
+  color: white;
 }
 
 .guess-form select.form-control {
