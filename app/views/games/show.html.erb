@@ -11,11 +11,18 @@
 <% end %>
 
 <% if flash.alert %>
-  <div class="alert alert-danger"><%= flash.alert %></div>
+  <div class="alert alert-danger"><%= flash.alert.first %></div>
 <% end %>
 
-<%= form_for [@game, @game.guesses.new], html: { class: "guess-form" } do |f| %>
-  <%= f.label :guessed_letter, "Guess", class: "sr-only" %>
-  <%= f.select :guessed_letter, ("a".."z").to_a, {}, class: "form-control" %>
-  <%= f.submit "Guess!", class: "btn" %>
+<% if @game.finished? %>
+  <% if @game.won? %>
+    <div class="alert alert-success">Well done!</div>
+  <% elsif @game.lost? %>
+    <div class="alert alert-danger">
+      Better luck next time ... the word was <%= @game.target_word %>
+    </div>
+  <% end %>
+  <p><%= link_to "Go back", new_game_path, class: "btn" %></p>
+<% else %>
+  <%= render "guess_form", game: @game, guess: @game.guesses.new %>
 <% end %>
