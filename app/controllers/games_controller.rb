@@ -4,13 +4,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new
-
-    if @game.save
-      redirect_to @game
-    else
-      redirect_to new_game_url
-    end
+    @game = Game.create!
+    redirect_to @game
   end
 
   def show
