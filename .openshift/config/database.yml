@@ -2,6 +2,14 @@ sqlite: &sqlite
   adapter: sqlite3
   database: db/<%= Rails.env %>.sqlite3
 
+mysql: &mysql
+  adapter: mysql2
+  database: "<%=ENV['OPENSHIFT_APP_NAME']%>"
+  username: "<%=ENV['OPENSHIFT_MYSQL_DB_USERNAME']%>"
+  password: "<%=ENV['OPENSHIFT_MYSQL_DB_PASSWORD']%>"
+  host:     <%=ENV['OPENSHIFT_MYSQL_DB_HOST']%>
+  port:     <%=ENV['OPENSHIFT_MYSQL_DB_PORT']%>
+
 postgresql: &postgresql
   adapter: postgresql
   database: <%=ENV['OPENSHIFT_APP_NAME']%>
@@ -21,10 +29,7 @@ defaults: &defaults
 development:
   <<: *defaults
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
+test: &test
   <<: *defaults
 
 production:
