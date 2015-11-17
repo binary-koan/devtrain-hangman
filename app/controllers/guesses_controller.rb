@@ -1,13 +1,10 @@
 class GuessesController < ApplicationController
   def create
-    @game = Game.find(params[:game_id])
-    @guess = @game.guesses.new(guess_params)
+    game = Game.find(params[:game_id])
+    submission = SubmitGuess.call(game, guess_params)
 
-    unless @guess.save
-      flash.alert = @guess.errors.full_messages.first
-    end
-
-    redirect_to @game
+    flash.alert = service.errors if service.errors
+    redirect_to game
   end
 
   private

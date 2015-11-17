@@ -51,23 +51,23 @@ RSpec.describe Game, type: :model do
       expect(guess.game).to eq game
     end
 
-    it "prevents adding guesses with the same letter" do
-      game.guesses.create!(guessed_letter: "a")
-      guess = game.guesses.new(guessed_letter: "a")
-      expect(guess.save).to eq false
-    end
-
-    it "prevents adding guesses when the game is won" do
-      win_game
-      guess = game.guesses.new(guessed_letter: "z")
-      expect(guess.save).to eq false
-    end
-
-    it "prevents adding guesses when the game is lost" do
-      lose_game
-      guess = game.guesses.new(guessed_letter: "z")
-      expect(guess.save).to eq false
-    end
+    # it "prevents adding guesses with the same letter" do
+    #   game.guesses.create!(guessed_letter: "a")
+    #   guess = game.guesses.new(guessed_letter: "a")
+    #   expect(guess.save).to eq false
+    # end
+    #
+    # it "prevents adding guesses when the game is won" do
+    #   win_game
+    #   guess = game.guesses.new(guessed_letter: "z")
+    #   expect(guess.save).to eq false
+    # end
+    #
+    # it "prevents adding guesses when the game is lost" do
+    #   lose_game
+    #   guess = game.guesses.new(guessed_letter: "z")
+    #   expect(guess.save).to eq false
+    # end
   end
 
   describe "#won?" do

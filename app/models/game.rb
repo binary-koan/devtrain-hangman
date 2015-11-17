@@ -15,6 +15,10 @@ class Game < ActiveRecord::Base
     incorrect_guesses.size >= MAX_LIVES
   end
 
+  def finished?
+    won? || lost?
+  end
+
   def guessed?(char)
     guessed_letters.include?(char)
   end
