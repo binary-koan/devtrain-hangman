@@ -26,4 +26,5 @@ RSpec.describe Guess, type: :model do
       expect(guess).not_to be_valid
     end
   end
+
 end
