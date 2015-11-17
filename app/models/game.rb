@@ -1,5 +1,4 @@
 class Game < ActiveRecord::Base
-  DICTIONARY = File.read(Rails.root.join("config/words.txt")).split # => service
   MAX_LIVES = 8
 
   has_many :guesses
@@ -38,6 +37,6 @@ class Game < ActiveRecord::Base
   private
 
   def generate_target
-    self.target_word ||= DICTIONARY.sample
+    self.target_word ||= PickWord.new.call
   end
 end
