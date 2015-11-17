@@ -1,5 +1,7 @@
 <h1>Game <%= @game.id %></h1>
 
+<%= image_tag "gibbet-0#{@game.incorrect_guesses.size + 1}.png", class: "gibbet-image" %>
+
 <%= render "target_word", chars: @game.masked_word %>
 
 <% if @game.incorrect_guesses.size > 0 %>
