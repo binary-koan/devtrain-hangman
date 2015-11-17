@@ -13,11 +13,12 @@
     padding: 5px;
     margin: 1px;
 
-    background: #ddd;
+    background: $form-control-border;
     border-radius: 3px;
 
     line-height: 38px;
     text-align: center;
+    text-transform: uppercase;
   }
 }
 
@@ -25,11 +26,13 @@
   display: inline-block;
   padding: 0 5px;
 
-  background: red;
+  background: $danger-color;
   border-radius: 3px;
   color: white;
+  text-transform: uppercase;
 }
 
 .guess-form select.form-control {
   width: 5em;
+  text-transform: uppercase;
 }

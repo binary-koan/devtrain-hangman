@@ -16,13 +16,13 @@
 
 <% if @game.finished? %>
   <% if @game.won? %>
-    <div class="alert alert-success">Well done!</div>
+    <div class="alert alert-success">You won!</div>
   <% elsif @game.lost? %>
     <div class="alert alert-danger">
       Better luck next time ... the word was <%= @game.target_word %>
     </div>
   <% end %>
-  <p><%= link_to "Go back", new_game_path, class: "btn" %></p>
+  <p><%= link_to "Go back", new_game_path, class: "button" %></p>
 <% else %>
   <%= render "guess_form", game: @game, guess: @game.guesses.new %>
 <% end %>
