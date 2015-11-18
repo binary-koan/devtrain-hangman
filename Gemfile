@@ -36,6 +36,7 @@ group :development, :test do
   # Use RSpec for testing
   gem 'rspec-rails', '~> 3.4'
   gem 'capybara'
+  gem 'simplecov'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 8.2'
