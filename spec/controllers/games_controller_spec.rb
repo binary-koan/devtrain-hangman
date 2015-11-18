@@ -38,7 +38,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it "succeeds for a game which exists" do
-      game = Game.create!
+      game = CreateGame.new.call
       get :show, id: game.id
       expect(response).to have_http_status(:success)
       expect(response).to render_template(:show)

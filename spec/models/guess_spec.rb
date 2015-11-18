@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Guess, type: :model do
-  let(:game) { Game.create! }
+  let(:game) { CreateGame.new.call }
   subject(:guess) { game.guesses.new }
 
   describe "#guessed_letter" do

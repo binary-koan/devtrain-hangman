@@ -3,7 +3,6 @@ class Game < ActiveRecord::Base
 
   has_many :guesses
 
-  before_validation :generate_target
   validates :target_word, presence: true
 
   def won?
@@ -32,11 +31,5 @@ class Game < ActiveRecord::Base
 
   def guessed_letters
     guesses.map(&:guessed_letter)
-  end
-
-  private
-
-  def generate_target
-    self.target_word ||= PickWord.new.call
   end
 end

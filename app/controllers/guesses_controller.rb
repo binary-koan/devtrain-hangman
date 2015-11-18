@@ -2,7 +2,7 @@ class GuessesController < ApplicationController
   before_action :assign_game
 
   def create
-    submission = SubmitGuess.new(@game, guess_params)
+    submission = SubmitGuess.new(@game, guess_params[:guessed_letter])
 
     unless submission.call
       flash.alert = submission.errors

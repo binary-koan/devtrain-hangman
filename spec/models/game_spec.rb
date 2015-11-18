@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:target_word) { "test" }
-  subject(:game) { Game.create!(target_word: target_word) }
+  subject(:game) { Game.new(target_word: target_word) }
 
   def guess(*letters)
     letters.each { |letter| game.guesses.create!(guessed_letter: letter) }
@@ -18,43 +18,17 @@ RSpec.describe Game, type: :model do
   end
 
   describe "#target_word" do
-    context "when unspecified" do
-      let(:target_word) { nil }
+    let(:target_word) { nil }
 
-      it "is generated on save" do
-        expect(game.target_word).not_to be_nil
-      end
-
-      it "is not regenerated on subsequent saves" do
-        word = game.target_word
-        game.save!
-        expect(game.target_word).to eq word
-      end
-    end
-
-    context "when set explicitly" do
-      let(:target_word) { "notactuallyaword" }
-
-      it "is saved as set" do
-        expect(game.target_word).to eq "notactuallyaword"
-      end
-    end
-  end
-
-  describe "#guesses" do
-    it "is initially empty" do
-      expect(game.guesses).to be_empty
-    end
-
-    it "adds guesses referencing the game" do
-      guess = game.guesses.create!(guessed_letter: "a")
-      expect(guess.game).to eq game
+    it "is required" do
+      expect(game).not_to be_valid
     end
   end
 
   describe "#won?" do
     let(:target_word) { "croc" }
     subject { game.won? }
+    before { game.save! }
 
     context "at the start of the game" do
       it { is_expected.to eq false }
@@ -69,6 +43,7 @@ RSpec.describe Game, type: :model do
   describe "#lost?" do
     let(:target_word) { "z" }
     subject { game.lost? }
+    before { game.save! }
 
     context "at the start of the game" do
       it { is_expected.to eq false }
@@ -82,7 +57,10 @@ RSpec.describe Game, type: :model do
 
   describe "#guessed?" do
     let(:target_word) { "longword" }
-    before { guess("l", "q", "w", "z") }
+    before do
+      game.save!
+      guess("l", "q", "w", "z")
+    end
 
     it "is true for correctly guessed letters" do
       expect(game).to be_guessed("l")
@@ -102,7 +80,10 @@ RSpec.describe Game, type: :model do
 
   describe "#incorrect_guesses" do
     let(:target_word) { "incorrect" }
-    before { guess("i", "q", "c", "z") }
+    before do
+      game.save!
+      guess("i", "q", "c", "z")
+    end
 
     it "contains incorrectly guessed letters" do
       expect(game.incorrect_guesses).to include "q"
@@ -122,8 +103,8 @@ RSpec.describe Game, type: :model do
 
   describe "#masked_word" do
     let(:target_word) { "test" }
-
     subject { game.masked_word }
+    before { game.save! }
 
     context "when no letters have been guessed" do
       it { is_expected.to eq [nil, nil, nil, nil] }

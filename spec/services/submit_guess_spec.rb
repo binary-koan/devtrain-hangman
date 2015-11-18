@@ -1,8 +1,8 @@
 describe SubmitGuess do
-  let(:game) { Game.create! }
+  let(:game) { CreateGame.new.call }
   let(:guessed_letter) { "a" }
 
-  subject(:submission) { SubmitGuess.new(game, guessed_letter: guessed_letter) }
+  subject(:submission) { SubmitGuess.new(game, guessed_letter) }
 
   describe "#call" do
     let(:errors) { submission.errors }

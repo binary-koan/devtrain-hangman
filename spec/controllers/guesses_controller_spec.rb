@@ -8,7 +8,7 @@ RSpec.describe GuessesController, type: :controller do
     end
 
     context "with a valid game" do
-      let(:game) { Game.create! }
+      let(:game) { CreateGame.new.call }
 
       it "succeeds with a valid guess" do
         post :create, game_id: game.id, guess: { guessed_letter: "a" }

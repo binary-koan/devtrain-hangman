@@ -1,9 +1,9 @@
 class SubmitGuess
   attr_reader :errors
 
-  def initialize(game, params)
+  def initialize(game, guessed_letter)
     @game = game
-    @guessed_letter = params[:guessed_letter]
+    @guessed_letter = guessed_letter
     @errors = []
   end
 
