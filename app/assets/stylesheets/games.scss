@@ -35,7 +35,58 @@
   text-transform: uppercase;
 }
 
-.guess-form select.form-control {
-  width: 5em;
-  text-transform: uppercase;
+.guess-form .letter-select {
+  display: inline-block;
+  position: relative;
+
+  input[type=text] {
+    width: 5em;
+    padding: $padding-small;
+    padding-right: 34px;
+    border: 2px solid $form-control-border;
+
+    border-radius: $base-border-radius;
+    background-color: white;
+    text-transform: uppercase;
+  }
+
+  .letters {
+    display: none;
+    position: absolute;
+    width: 5em;
+    max-height: 25em;
+    overflow: auto;
+
+    border: 2px solid $form-control-border;
+    border-top: 0;
+    border-radius: 0 0 $base-border-radius $base-border-radius;
+
+    button {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+
+      background: white;
+      color: $text-color;
+      text-transform: uppercase;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+
+  &.open {
+    input[type=text] {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .letters {
+      display: block;
+    }
+  }
 }

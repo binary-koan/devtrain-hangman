@@ -12,7 +12,4 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require microplugin
-//= require sifter
-//= require selectize
 //= require_tree .

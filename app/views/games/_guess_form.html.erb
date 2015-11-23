@@ -1,5 +1,12 @@
 <%= form_for [game, guess], html: { class: "guess-form" } do |f| %>
   <%= f.label :guessed_letter, "Guess", class: "sr-only" %>
-  <%= f.select :guessed_letter, valid_guesses(game), {}, class: "form-control" %>
+  <div class="letter-select">
+    <%= f.text_field :guessed_letter %>
+    <div class="letters" aria-hidden="true">
+      <% valid_guesses(game).each do |letter| %>
+        <button><%= letter %></button>
+      <% end %>
+    </div>
+  </div>
   <%= f.submit "Guess!" %>
 <% end %>
